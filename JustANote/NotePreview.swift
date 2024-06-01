@@ -8,16 +8,24 @@
 import SwiftUI
 
 struct NotePreview: View {
-    @Environment(\.modelContext) private var modelContext
-    @State var currentNote: Note
+    var currentNote: Note
+    
     
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-#Preview {
-    NotePreview(currentNote: Note.init(timestamp: 
-                                        Date.now, title: "Yes", userNote: "YesYesYes"))
-    .modelContainer(for: Item.self, inMemory: true)
+struct NotePreview_Previews: PreviewProvider {
+    static var previews: some View {
+        let mockNote = Note(
+            timestamp: Date(),
+            title: "Hello, World!",
+            userNote: "This is a note about our world",
+            latitude: 40.7128,
+            longitude: -74.0060,
+            userImages:  []
+        )
+        NotePreview(currentNote: mockNote)
+    }
 }

@@ -18,9 +18,12 @@ final class Note {
     var userImages: [Data]? //Store images the user might add
     
     
-    init(timestamp: Date, title: String, userNote: String) {
+    init(timestamp: Date, title: String, userNote: String, latitude: Double?, longitude: Double?, userImages: [Data]?) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
+        self.latitude = latitude
+        self.longitude = longitude
+        self.userImages = userImages
     }
 }
