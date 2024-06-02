@@ -16,12 +16,17 @@ struct ContentView: View {
     @State private var selectedSort = SortOrder.allCases.first! //Dictates sort order
     @State private var searchingTrash: Bool = false
     @State private var isPresentingDetailView = false
+    @State private var showFavorites: Bool = true
     
-    @State var newNote = Note(timestamp: Date(), title: "", userNote: "leave a note", latitude: nil, longitude: nil, userImages: nil)
+    let newNote = Note(timestamp: Date(), title: "", userNote: "leave a note", latitude: nil, longitude: nil, userImages: nil)
     
     var formattedNotes: [Note] {
         if searchQuery == "" {
-            return notes
+            let nonFavoriteFormatted = notes.compactMap { note in
+                return note.isFavorite ? nil : note
+            }
+            
+            return nonFavoriteFormatted.sortByChoice(basedOn: selectedSort)
         }
         let filteredNotes = notes.compactMap { note in
             //Bool for title match
@@ -30,7 +35,6 @@ struct ContentView: View {
             //Bool for title match
             let categoryMatch = false //note.category.ranges(of: searchQuery, options: .caseInsensitive) != nil
             
-            
             //Compact map eliminates all nil values, so if there's a title
             //  or category match return the note else return nil
             return (titleMatch || categoryMatch) ? note : nil
@@ -38,29 +42,58 @@ struct ContentView: View {
         return filteredNotes.sortByChoice(basedOn: selectedSort)
     }
     
+    var favoriteNotes: [Note] {
+        let favoriteNotes = notes.compactMap { note in
+            return note.isFavorite ? note : nil
+        }
+        
+        return favoriteNotes.sortByChoice(basedOn: selectedSort)
+    }
+    
     
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(notes) { note in
-                        NavigationLink(destination: DetailedNoteView(currentNote: note)) {
-                            NotePreview(currentNote: note)
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 2)
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        note.isInTrash.toggle()
-                                    } label: {
-                                        Label("Trash", systemImage: "trash.fill")
-                                    }
-                                    
-                                    Button(role: .cancel) {
-                                        note.isFavorite.toggle()
-                                    } label: {
-                                        Label("Favorite", systemImage: "star.fill")
-                                    }
+                    if searchQuery == "" && !favoriteNotes.isEmpty {
+                        Section(header: Text("Favorites")) {
+                            ForEach(favoriteNotes) { note in
+                                NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                                    NotePreview(currentNote: note)
+                                        .padding(.horizontal, 10)
+                                        .padding(.bottom, 2)
+                                        .swipeActions {
+                                            Button(role: .destructive) {
+                                                note.isFavorite.toggle()
+                                            } label: {
+                                                Label("Unfavorite", systemImage: "star.fill")
+                                            }
+                                        }
                                 }
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("All Notes")) {
+                        ForEach(formattedNotes) { note in
+                            NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                                NotePreview(currentNote: note)
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, 2)
+                                    .swipeActions {
+                                        Button(role: .destructive) {
+                                            note.isInTrash.toggle()
+                                        } label: {
+                                            Label("Trash", systemImage: "trash.fill")
+                                        }
+                                        
+                                        Button(role: .cancel) {
+                                            note.isFavorite.toggle()
+                                        } label: {
+                                            Label("Favorite", systemImage: "star.fill")
+                                        }
+                                    }
+                            }
                         }
                     }
                 }
@@ -82,7 +115,7 @@ struct ContentView: View {
             .toolbar {
                 //Button to add new note
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(destination: DetailedNoteView(currentNote: newNote), label: {
+                    NavigationLink(destination: NewNoteView(), label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)

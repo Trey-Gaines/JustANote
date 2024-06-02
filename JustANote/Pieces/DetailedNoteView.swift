@@ -11,7 +11,6 @@ struct DetailedNoteView: View {
     @Bindable var currentNote: Note
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-
     
     var body: some View {
             VStack {
@@ -55,7 +54,7 @@ struct DetailedNoteView: View {
                         }
                         Spacer()
                     }
-
+                    .padding(.bottom, 5)
                 }
                 ScrollView {
                     TextEditor(text: $currentNote.userNote)
@@ -66,18 +65,8 @@ struct DetailedNoteView: View {
                         .padding(.horizontal)
                 }
                 HStack {
-                    //Button to add images
-                    Button {
-                        print("Yes")
-                    } label: {
-                        Image(systemName: "photo.circle.fill")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                    }
                     Spacer()
-                    //Button to save and dismiss
                     Button {
-                        modelContext.insert(currentNote)
                         dismiss()
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
@@ -85,14 +74,6 @@ struct DetailedNoteView: View {
                             .fontWeight(.semibold)
                     }
                     Spacer()
-                    //Button to add location
-                    Button {
-                        print("Yes")
-                    } label: {
-                        Image(systemName: "location.circle.fill")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                    }
                 }
                 .padding()
             }

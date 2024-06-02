@@ -6,17 +6,21 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct NewNoteView: View {
-    @Bindable var currentNote: Note
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    
+    //Creating a new Object
+    @State var myTitle: String = ""
+    @State var myNote: String = ""
 
     
     var body: some View {
             VStack {
                 VStack(alignment: .center) {
-                    TextField("Enter A Title", text: $currentNote.title)
+                    TextField("Enter A Title", text: $myTitle)
                         .background(Color.clear)
                         .multilineTextAlignment(.center)
                         .cornerRadius(5)
@@ -24,7 +28,8 @@ struct NewNoteView: View {
                         .frame(maxWidth: .infinity)
                         .fontWeight(.bold)
                         .padding(.horizontal)
-                    Text(currentNote.formattedDate)
+                    
+                    Text(DateFormatter.localizedString(from: Date(), dateStyle: .long, timeStyle: .none))
                         .fontWeight(.ultraLight)
                         .font(.footnote)
                     HStack {
@@ -33,7 +38,7 @@ struct NewNoteView: View {
                 }
                 .padding()
                 ScrollView {
-                    TextEditor(text: $currentNote.userNote)
+                    TextEditor(text: $myNote)
                         .background(Color.clear)
                         .cornerRadius(5)
                         .font(.body)
@@ -51,13 +56,16 @@ struct NewNoteView: View {
                     }
                     Spacer()
                     //Button to save and dismiss
-                    Button {
-                        modelContext.insert(currentNote)
-                        dismiss()
-                    } label: {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
+                    if myTitle != "" && myNote != "" {
+                        Button {
+                            let myNewNote = Note(timestamp: Date(), title: myTitle, userNote: myNote, latitude: nil, longitude: nil, userImages: nil)
+                            modelContext.insert(myNewNote)
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 20))
+                                .fontWeight(.semibold)
+                        }
                     }
                     Spacer()
                     //Button to add location
