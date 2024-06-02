@@ -10,52 +10,119 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @Query(filter: #Predicate<Note> { note in //filter out all trashed notes
+        !note.isInTrash }) private var notes: [Note]
+    @State private var searchQuery: String = ""
+    @State private var selectedSort = SortOrder.allCases.first! //Dictates sort order
+    @State private var searchingTrash: Bool = false
+    @State private var isPresentingDetailView = false
+    
+    @State var newNote = Note(timestamp: Date(), title: "", userNote: "leave a note", latitude: nil, longitude: nil, userImages: nil)
+    
+    var formattedNotes: [Note] {
+        if searchQuery == "" {
+            return notes
+        }
+        let filteredNotes = notes.compactMap { note in
+            //Bool for title match
+            let titleMatch = note.title.range(of: searchQuery, options: .caseInsensitive) != nil
+            
+            //Bool for title match
+            let categoryMatch = false //note.category.ranges(of: searchQuery, options: .caseInsensitive) != nil
+            
+            
+            //Compact map eliminates all nil values, so if there's a title
+            //  or category match return the note else return nil
+            return (titleMatch || categoryMatch) ? note : nil
+        }
+        return filteredNotes.sortByChoice(basedOn: selectedSort)
+    }
+    
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationView {
+            VStack {
+                List {
+                    ForEach(notes) { note in
+                        NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                            NotePreview(currentNote: note)
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 2)
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        note.isInTrash.toggle()
+                                    } label: {
+                                        Label("Trash", systemImage: "trash.fill")
+                                    }
+                                    
+                                    Button(role: .cancel) {
+                                        note.isFavorite.toggle()
+                                    } label: {
+                                        Label("Favorite", systemImage: "star.fill")
+                                    }
+                                }
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
+                HStack{
+                    Button {
+                        searchingTrash.toggle()
+                    } label: {
+                        Image(systemName: "trash")
+                            .font(.system(size: 20))
+                            .fontWeight(.semibold)
+                    }
+                    .padding(.all, 1)
+                }
+            }
+            .sheet(isPresented: $searchingTrash) {
+                TrashView()
+                    .presentationDetents([.medium, .large])
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                //Button to add new note
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink(destination: DetailedNoteView(currentNote: newNote), label: {
+                        Image(systemName: "square.and.pencil")
+                            .font(.system(size: 20))
+                            .fontWeight(.semibold)
+                    })
+                    .navigationBarHidden(true)
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                
+                //Title Text View
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        Spacer()
+                        Text("My Notes")
+                            .font(.system(size: 25))
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+                }
+                
+                //Button to change sort order
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Picker("", selection: $selectedSort) {
+                            ForEach(SortOrder.allCases, id: \.rawValue) { order in
+                                Label(order.rawValue.capitalized, systemImage: order.symbolValue)
+                                    .tag(order)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "rectangle.stack")
+                            .font(.system(size: 20))
+                            .fontWeight(.semibold)
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: Note.self, inMemory: true)
 }
