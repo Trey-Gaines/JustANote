@@ -66,6 +66,12 @@ struct NewNoteView: View {
                                 .font(.system(size: 20))
                                 .fontWeight(.semibold)
                         }
+                    } else {
+                        Button(role: .destructive) {
+                            dismiss()
+                        } label: {
+                            Text("Cancel")
+                        }
                     }
                     Spacer()
                     //Button to add location
