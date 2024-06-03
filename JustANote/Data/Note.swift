@@ -37,14 +37,32 @@ final class Note: Identifiable {
     
     //Shorthands the userNote for preview
     var shortNote: String {
-        if userNote.count > 20 {
+        //Limit string to first 80 characters
+        let trimmedNote = userNote.prefix(75)
+        
+        //Replace newlines & trim whitespaces within new substring
+        let cleanedNote = trimmedNote
+            .replacingOccurrences(of: "\n", with: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        //Add continuation (ellipses) if needed
+        if userNote.count > 75 {
+            return cleanedNote + "..."
+        } else {
+            return cleanedNote
+        }
+    }
+    
+    //Shorthands the title for preview
+    var shortTitle: String {
+        if title.count > 10 {
             //set a string index, offset the startIndex by 20
-            let index = userNote.index(userNote.startIndex, offsetBy: 20)
+            let index = title.index(title.startIndex, offsetBy: 10)
             //Create a substring from start to index, convert it to string
             //     and then trim the whitespaces and add "..."
-            return String(userNote[..<index]).trimmingCharacters(in: .whitespacesAndNewlines) + "..."
+            return String(title[..<index]).trimmingCharacters(in: .whitespacesAndNewlines) + "..."
         } else {
-            return userNote
+            return title
         }
     }
     

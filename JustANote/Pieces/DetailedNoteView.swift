@@ -49,6 +49,7 @@ struct DetailedNoteView: View {
                             } else {
                                 if let matchingTag = possibleTags.first(where: { $0.title == myNewTag }) {
                                     myTag = matchingTag
+                                    currentNote.tagGiven = matchingTag
                                 }
                             }
                         } //Check both because while the picker was set after NewTag was created, myTag wasn't
@@ -56,6 +57,7 @@ struct DetailedNoteView: View {
                             if createNewTag == false {
                                 if let matchingTag = possibleTags.first(where: { $0.title == myNewTag }) {
                                     myTag = matchingTag
+                                    currentNote.tagGiven = matchingTag
                                 }
                             }
                         }
@@ -65,7 +67,7 @@ struct DetailedNoteView: View {
                             Image(systemName: "tag")
                                 .font(.footnote)
                                 .fontWeight(.semibold)
-                            Text(myTag?.title ?? "Select A Tag")
+                            Text(myNewTag)
                                 .fontWeight(.semibold)
                                 .font(.footnote)
                         }
@@ -171,7 +173,6 @@ struct DetailedNoteView: View {
                     }
                 } else {
                     Button {
-                        currentNote.tagGiven = myTag
                         dismiss()
                     } label: {
                         Image(systemName: "checkmark.circle.fill")

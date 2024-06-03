@@ -9,49 +9,58 @@ import SwiftUI
 
 struct NotePreview: View {
     var currentNote: Note
-    @Environment(\.colorScheme) private var colorScheme 
     
     var body: some View {
-        VStack {
+        VStack(spacing: 2) {
             HStack {
                 VStack(alignment: .leading) {
                     Text(currentNote.title)
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
                     
                     Text(currentNote.shortNote)
                         .fontWeight(.ultraLight)
+                        .multilineTextAlignment(.leading)
                         .lineLimit(2)
                 }
-                .padding(.all, 0)
                 Spacer()
-                
-                VStack {
-                    // If For Map
-                    if currentNote.latitude != nil || currentNote.longitude != nil {
-                        Text("You got data!")
-                    }
-                    
-                    // If For Images
-                    if let imageData = currentNote.userImages?.first, let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 200, maxHeight: 200)
-                    }
-                }
             }
-            Text(currentNote.timeString)
-                .font(.footnote)
+            
+            
+            HStack {
+                Spacer()
+                Text("#\(currentNote.tagGiven?.title ?? "N/A")")
+                    .font(.footnote)
+                    .foregroundStyle(.blue)
+                HStack {
+                    Spacer()
+                    if currentNote.latitude != nil {
+                        Image(systemName: "mappin.circle")
+                            .font(.footnote)
+                            .foregroundColor(.blue)
+                    }
+                    if currentNote.userImages != nil {
+                        Image(systemName: "photo.artframe.circle")
+                            .font(.footnote)
+                            .foregroundColor(.blue)
+                    }
+                    Spacer()
+                }
+                Text(currentNote.timeString)
+                    .font(.footnote)
+                Spacer()
+            }
         }
-        .frame(maxWidth: .infinity)
-        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+
     }
 }
 
 #Preview {
     NotePreview(currentNote: Note(timestamp: Date.distantPast,
-                                  title: "My Favorite Note", 
-                                  userNote: "My favorite thing to do is win",
-                                  latitude: nil, longitude: nil, userImages: nil))
+                                  title: "My Favorite Note is this one",
+                                  userNote: "My favorite thing to do is win. There are no other pleasantries. I just want to win, that's it for me. I like to",
+                                  tagGiven: nil, latitude: nil, longitude: nil, userImages: nil))
 }
