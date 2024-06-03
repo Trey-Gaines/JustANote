@@ -11,23 +11,23 @@ struct NotePreview: View {
     var currentNote: Note
     
     var body: some View {
-        VStack(spacing: 2) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(currentNote.title)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(1)
-                    
-                    Text(currentNote.shortNote)
-                        .fontWeight(.ultraLight)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
-                }
-                Spacer()
+        VStack {
+            HStack(alignment: .center) {
+                Text(currentNote.title)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
+            HStack(alignment: .center) {
+                Text(currentNote.shortNote)
+                    .fontWeight(.ultraLight)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack {
                 Spacer()
@@ -52,9 +52,8 @@ struct NotePreview: View {
                     .font(.footnote)
                 Spacer()
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-
     }
 }
 

@@ -121,6 +121,7 @@ struct ContentView: View {
             .sheet(isPresented: $searchingTrash) {
                 TrashView()
                     .presentationDetents([.medium, .large])
+                    .padding()
             }
             .sheet(isPresented: $tagView) {
                 myTagView()

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import _MapKit_SwiftUI
 
 @Model
 final class Note: Identifiable {
@@ -77,13 +78,8 @@ final class Note: Identifiable {
         return formatter.localizedString(for: timestamp, relativeTo: Date())
     }
     
-    
-    
-    
-    
-    
     //Functions
-    init(timestamp: Date, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false, isInTrash: Bool = false, latitude: Double?, longitude: Double?, userImages: [Data]?) {
+    init(timestamp: Date, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false, isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
@@ -93,6 +89,12 @@ final class Note: Identifiable {
         self.latitude = latitude
         self.longitude = longitude
         self.userImages = userImages
+    }
+    
+    
+    func setLocation(from location: CLLocation) {
+        self.latitude = location.coordinate.latitude
+        self.longitude = location.coordinate.longitude
     }
 }
 

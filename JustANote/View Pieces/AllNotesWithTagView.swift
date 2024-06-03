@@ -24,6 +24,7 @@ struct AllNotesWithTagView: View {
                     .font(.system(size: 25))
                     .fontWeight(.semibold)
                     .foregroundStyle(.blue)
+                    .multilineTextAlignment(.center)
             }
             List {
                 ForEach(myNotes ?? []) { note in

@@ -21,7 +21,6 @@ struct TrashView: View {
                     Text("Trash")
                         .font(.system(size: 25))
                         .fontWeight(.semibold)
-                        .padding()
                 }
                 List {
                     ForEach(notes) { note in
