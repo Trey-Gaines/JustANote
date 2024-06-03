@@ -10,9 +10,10 @@ import SwiftData
 
 struct CreateNewTag: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var possibleTags: [Tags]
     @Environment(\.dismiss) private var dismiss
+    @Query var possibleTags: [Tags]
     @Binding var myNewTag: String
+    @Binding var myBool: Bool
     
     var body: some View {
         VStack(spacing: 2) {
@@ -35,7 +36,7 @@ struct CreateNewTag: View {
                 
                 if myNewTag != "" && myNewTag.lowercased() != ("New Tag").lowercased() && !possibleTags.contains(where: {$0.title.lowercased() == myNewTag.lowercased()}) {
                     Button {
-                        addNewTag(myNewTag: myNewTag)
+                        addNewTag(newTag: myNewTag)
                     } label: {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 20))
@@ -50,11 +51,14 @@ struct CreateNewTag: View {
                 Spacer()
             }
         }
+        .onAppear {
+            myNewTag = ""
+        }
     }
     
-    private func addNewTag(myNewTag title: String) {
-        let myNewTag = Tags(title: title)
-        modelContext.insert(myNewTag)
-        dismiss()
+    private func addNewTag(newTag title: String) {
+        let newTag = Tags(title: title)
+        modelContext.insert(newTag)
+        myBool = false
     }
 }

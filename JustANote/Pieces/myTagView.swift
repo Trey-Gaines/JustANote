@@ -19,7 +19,6 @@ struct myTagView: View {
         NavigationView {
             VStack {
                 List {
-                    Text("A")
                     Section(header: Text("All Tags")) {
                         ForEach(possibleTags) { tag in
                             HStack {
@@ -65,7 +64,7 @@ struct myTagView: View {
             }
             .padding()
             .sheet(isPresented: $newTagView) {
-                CreateNewTag(myNewTag: $newTagName)
+                CreateNewTag(myNewTag: $newTagName, myBool: $newTagView)
                     .padding()
                     .presentationDetents([.height(135), .height(150)])
             }

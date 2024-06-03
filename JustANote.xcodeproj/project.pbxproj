@@ -99,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				2D1FCF102C0C0F7A00D7430E /* ToDo.rtf */,
-				2D1FCF012C0B7CBE00D7430E /* DetailedNoteView.swift */,
 				2D0903542C0B436D00ADCF4D /* NotePreview.swift */,
 				2D1FCF142C0D403300D7430E /* myTagView.swift */,
 				2D1FCF162C0D4DF300D7430E /* CreateNewTag.swift */,
+				2D1FCF012C0B7CBE00D7430E /* DetailedNoteView.swift */,
 			);
 			path = Pieces;
 			sourceTree = "<group>";

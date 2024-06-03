@@ -11,7 +11,7 @@ import Foundation
 
 struct DetailedNoteView: View {
     @Bindable var currentNote: Note
-    var isNewNote: Bool //Instead of two views
+    var isNewNote: Bool
     @State private var createNewTag: Bool = false
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -33,7 +33,6 @@ struct DetailedNoteView: View {
                         .fontWeight(.bold)
                         .padding(.horizontal)
                 }
-
                 
                 HStack {
                     Menu {
@@ -48,6 +47,13 @@ struct DetailedNoteView: View {
                             if myNewTag == "" {
                                 createNewTag = true
                             } else {
+                                if let matchingTag = possibleTags.first(where: { $0.title == myNewTag }) {
+                                    myTag = matchingTag
+                                }
+                            }
+                        } //Check both because while the picker was set after NewTag was created, myTag wasn't
+                        .onChange(of: createNewTag) {
+                            if createNewTag == false {
                                 if let matchingTag = possibleTags.first(where: { $0.title == myNewTag }) {
                                     myTag = matchingTag
                                 }
@@ -85,7 +91,7 @@ struct DetailedNoteView: View {
             .padding()
             
             .sheet(isPresented: $createNewTag) {
-                CreateNewTag(myNewTag: $myNewTag)
+                CreateNewTag(myNewTag: $myNewTag, myBool: $createNewTag)
                 .padding()
                 .presentationDetents([.height(135), .height(150)])
             }
@@ -191,7 +197,7 @@ struct DetailedNoteView: View {
             if currentNote.tagGiven != nil {
                 myNewTag = currentNote.tagGiven!.title
             } else {
-                myNewTag = "None"
+                myNewTag = "Select A Tag"
             }
             if isNewNote {
                 currentNote.title = ""
@@ -206,7 +212,6 @@ struct DetailedNoteView: View {
             }
         }
     }
-    
     
     private func addNewTag(myNewTag title: String) {
         let myNewTag = Tags(title: title)
