@@ -14,11 +14,18 @@ final class Note: Identifiable {
     var timestamp: Date
     var title: String
     var userNote: String
-    var isFavorite: Bool
-    var isInTrash: Bool
     var latitude: Double? // Store latitude
     var longitude: Double? // Store longitude
     var userImages: [Data]? //Store images the user might add
+    var isFavorite: Bool
+    var isInTrash: Bool
+    
+    
+    //When I delete a note, the category won't be deleted with nullify
+    //   Cascade will delete both the note and the category
+    @Relationship(deleteRule: .nullify, inverse: \Tags.notes)
+    var tagGiven: Tags?
+    
     
     
     //Computed Properties
@@ -26,20 +33,6 @@ final class Note: Identifiable {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         return formatter.string(from: timestamp)
-    }
-    
-    
-    
-    //Functions
-    init(timestamp: Date, title: String, userNote: String, isFavorite: Bool = false, latitude: Double?, longitude: Double?, userImages: [Data]?, isInTrash: Bool = false) {
-        self.timestamp = timestamp
-        self.title = title
-        self.userNote = userNote
-        self.isFavorite = isFavorite
-        self.isInTrash = isInTrash
-        self.latitude = latitude
-        self.longitude = longitude
-        self.userImages = userImages
     }
     
     //Shorthands the userNote for preview
@@ -65,9 +58,25 @@ final class Note: Identifiable {
         //  relative to Date
         return formatter.localizedString(for: timestamp, relativeTo: Date())
     }
+    
+    
+    
+    
+    
+    
+    //Functions
+    init(timestamp: Date, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false, isInTrash: Bool = false, latitude: Double?, longitude: Double?, userImages: [Data]?) {
+        self.timestamp = timestamp
+        self.title = title
+        self.userNote = userNote
+        self.tagGiven = tagGiven
+        self.isFavorite = isFavorite
+        self.isInTrash = isInTrash
+        self.latitude = latitude
+        self.longitude = longitude
+        self.userImages = userImages
+    }
 }
-
-
 
 
 

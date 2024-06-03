@@ -15,8 +15,10 @@
 		2D0903552C0B436D00ADCF4D /* NotePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0903542C0B436D00ADCF4D /* NotePreview.swift */; };
 		2D1FCF022C0B7CBE00D7430E /* DetailedNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF012C0B7CBE00D7430E /* DetailedNoteView.swift */; };
 		2D1FCF042C0B7CED00D7430E /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF032C0B7CED00D7430E /* TrashView.swift */; };
-		2D1FCF0D2C0BF50D00D7430E /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF0C2C0BF50D00D7430E /* NewNoteView.swift */; };
 		2D1FCF112C0C0F7A00D7430E /* ToDo.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2D1FCF102C0C0F7A00D7430E /* ToDo.rtf */; };
+		2D1FCF132C0CB0E900D7430E /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF122C0CB0E900D7430E /* Tags.swift */; };
+		2D1FCF152C0D403300D7430E /* myTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF142C0D403300D7430E /* myTagView.swift */; };
+		2D1FCF172C0D4DF300D7430E /* CreateNewTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1FCF162C0D4DF300D7430E /* CreateNewTag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,8 +31,10 @@
 		2D0903542C0B436D00ADCF4D /* NotePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePreview.swift; sourceTree = "<group>"; };
 		2D1FCF012C0B7CBE00D7430E /* DetailedNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNoteView.swift; sourceTree = "<group>"; };
 		2D1FCF032C0B7CED00D7430E /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
-		2D1FCF0C2C0BF50D00D7430E /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		2D1FCF102C0C0F7A00D7430E /* ToDo.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ToDo.rtf; sourceTree = "<group>"; };
+		2D1FCF122C0CB0E900D7430E /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
+		2D1FCF142C0D403300D7430E /* myTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myTagView.swift; sourceTree = "<group>"; };
+		2D1FCF162C0D4DF300D7430E /* CreateNewTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				2D0903522C0B42B100ADCF4D /* Note.swift */,
+				2D1FCF122C0CB0E900D7430E /* Tags.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -95,8 +100,9 @@
 			children = (
 				2D1FCF102C0C0F7A00D7430E /* ToDo.rtf */,
 				2D1FCF012C0B7CBE00D7430E /* DetailedNoteView.swift */,
-				2D1FCF0C2C0BF50D00D7430E /* NewNoteView.swift */,
 				2D0903542C0B436D00ADCF4D /* NotePreview.swift */,
+				2D1FCF142C0D403300D7430E /* myTagView.swift */,
+				2D1FCF162C0D4DF300D7430E /* CreateNewTag.swift */,
 			);
 			path = Pieces;
 			sourceTree = "<group>";
@@ -183,10 +189,12 @@
 				2D0903452C0B425400ADCF4D /* ContentView.swift in Sources */,
 				2D1FCF042C0B7CED00D7430E /* TrashView.swift in Sources */,
 				2D0903552C0B436D00ADCF4D /* NotePreview.swift in Sources */,
-				2D1FCF0D2C0BF50D00D7430E /* NewNoteView.swift in Sources */,
+				2D1FCF132C0CB0E900D7430E /* Tags.swift in Sources */,
 				2D0903432C0B425400ADCF4D /* JustANoteApp.swift in Sources */,
 				2D1FCF022C0B7CBE00D7430E /* DetailedNoteView.swift in Sources */,
 				2D0903532C0B42B100ADCF4D /* Note.swift in Sources */,
+				2D1FCF152C0D403300D7430E /* myTagView.swift in Sources */,
+				2D1FCF172C0D4DF300D7430E /* CreateNewTag.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

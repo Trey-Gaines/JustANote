@@ -12,13 +12,14 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(filter: #Predicate<Note> { note in //filter out all trashed notes
         !note.isInTrash }) private var notes: [Note]
-    @State private var searchQuery: String = ""
+    @State private var searchQuery: String = "" //For Search
     @State private var selectedSort = SortOrder.allCases.first! //Dictates sort order
     @State private var searchingTrash: Bool = false
     @State private var isPresentingDetailView = false
     @State private var showFavorites: Bool = true
+    @State private var tagView: Bool = false
     
-    let newNote = Note(timestamp: Date(), title: "", userNote: "leave a note", latitude: nil, longitude: nil, userImages: nil)
+    let newNote = Note(timestamp: Date(), title: "", userNote: "", latitude: nil, longitude: nil, userImages: nil)
     
     var formattedNotes: [Note] {
         if searchQuery == "" {
@@ -58,7 +59,7 @@ struct ContentView: View {
                     if searchQuery == "" && !favoriteNotes.isEmpty {
                         Section(header: Text("Favorites")) {
                             ForEach(favoriteNotes) { note in
-                                NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                                NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
                                     NotePreview(currentNote: note)
                                         .padding(.horizontal, 10)
                                         .padding(.bottom, 2)
@@ -76,7 +77,7 @@ struct ContentView: View {
                     
                     Section(header: Text("All Notes")) {
                         ForEach(formattedNotes) { note in
-                            NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                            NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
                                 NotePreview(currentNote: note)
                                     .padding(.horizontal, 10)
                                     .padding(.bottom, 2)
@@ -101,9 +102,18 @@ struct ContentView: View {
                     Button {
                         searchingTrash.toggle()
                     } label: {
-                        Image(systemName: "trash")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
+                        VStack {
+                            Image(systemName: "trash")
+                            Text("Search the Trash")
+                        }
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.blue.opacity(0.1))
+                                .shadow(radius: 5)
+                        )
                     }
                     .padding(.all, 1)
                 }
@@ -112,10 +122,13 @@ struct ContentView: View {
                 TrashView()
                     .presentationDetents([.medium, .large])
             }
+            .sheet(isPresented: $tagView) {
+                myTagView()
+            }
             .toolbar {
                 //Button to add new note
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(destination: NewNoteView(), label: {
+                    NavigationLink(destination: DetailedNoteView(currentNote: newNote, isNewNote: true), label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
@@ -127,9 +140,13 @@ struct ContentView: View {
                 ToolbarItem(placement: .principal) {
                     HStack {
                         Spacer()
-                        Text("My Notes")
-                            .font(.system(size: 25))
-                            .fontWeight(.semibold)
+                        Button {
+                            tagView = true
+                        } label: {
+                            Text("My Notes")
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                        }
                         Spacer()
                     }
                 }

@@ -25,7 +25,7 @@ struct TrashView: View {
                 }
                 List {
                     ForEach(notes) { note in
-                        NavigationLink(destination: DetailedNoteView(currentNote: note)) {
+                        NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
                             NotePreview(currentNote: note)
                         }
                     }
