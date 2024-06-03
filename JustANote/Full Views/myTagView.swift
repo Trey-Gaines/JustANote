@@ -13,7 +13,9 @@ struct myTagView: View {
     @Environment(\.dismiss) private var dismiss
     @Query private var possibleTags: [Tags]
     @State private var newTagView: Bool = false
+    @State private var tagClickedCheck: Bool = false
     @State var newTagName = ""
+    @State var tagClicked: Tags? = nil
     
     var body: some View {
         NavigationView {
@@ -38,9 +40,12 @@ struct myTagView: View {
                                     Label("Trash", systemImage: "trash.fill")
                                 }
                             }
+                            .onTapGesture {
+                                tagClicked = tag
+                                tagClickedCheck = true
+                            }
                         }
                     }
-                    
                 }
                 
                 VStack {
@@ -67,6 +72,11 @@ struct myTagView: View {
                 CreateNewTag(myNewTag: $newTagName, myBool: $newTagView)
                     .padding()
                     .presentationDetents([.height(135), .height(150)])
+            }
+            .sheet(isPresented: $tagClickedCheck) {
+                AllNotesWithTagView(myTag: tagClicked ?? Tags(title: "Error"))
+                    .padding()
+                    .presentationDetents([.medium])
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
