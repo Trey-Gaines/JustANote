@@ -20,29 +20,45 @@ struct myTagView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    Section(header: Text("All Tags")) {
-                        ForEach(possibleTags) { tag in
-                            HStack {
-                                Text(tag.title)
-                                    .fontWeight(.semibold)
-                                Spacer()
-                                Text("\(tag.notes?.count ?? 0)")
-                                    .fontWeight(.light)
+                if possibleTags.count == 0 {
+                    VStack {
+                        ContentUnavailableView {
+                            VStack(spacing: 5) {
+                                Label("No Tags", systemImage: "archivebox")
+                                Text("Create some tags")
+                                    .font(.footnote)
+                                    .foregroundStyle(.gray)
+                                    .opacity(0.2)
                             }
-                            
-                            .padding(.horizontal, 10)
-                            .padding(.bottom, 2)
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    modelContext.delete(tag)
-                                } label: {
-                                    Label("Trash", systemImage: "trash.fill")
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                } else {
+                    List {
+                        Section(header: Text("All Tags")) {
+                            ForEach(possibleTags) { tag in
+                                HStack {
+                                    Text(tag.title)
+                                        .fontWeight(.semibold)
+                                    Spacer()
+                                    Text("\(tag.notes?.count ?? 0)")
+                                        .fontWeight(.light)
                                 }
-                            }
-                            .onTapGesture {
-                                tagClicked = tag
-                                tagClickedCheck = true
+                                
+                                .padding(.horizontal, 10)
+                                .padding(.bottom, 2)
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        modelContext.delete(tag)
+                                    } label: {
+                                        Label("Trash", systemImage: "trash.fill")
+                                    }
+                                }
+                                .onTapGesture {
+                                    tagClicked = tag
+                                    tagClickedCheck = true
+                                }
                             }
                         }
                     }
