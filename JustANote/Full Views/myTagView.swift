@@ -81,11 +81,15 @@ struct myTagView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     VStack {
-                        Text("Tag Settings")
-                            .font(.system(size: 25))
-                            .fontWeight(.bold)
-                            .padding(.all, 2)
-                            .padding(.top, 50)
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Tag Settings")
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                                .padding(.all, 2)
+                                .padding(.top, 50)
+                        }
                         Text("Create or Delete tags")
                             .font(.footnote)
                             .opacity(0.2)

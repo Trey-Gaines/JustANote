@@ -123,7 +123,8 @@ struct ContentView: View {
                     .presentationDetents([.medium, .large])
                     .padding()
             }
-            .sheet(isPresented: $tagView) {
+            
+            .fullScreenCover(isPresented: $tagView) {
                 myTagView()
             }
             .toolbar {
