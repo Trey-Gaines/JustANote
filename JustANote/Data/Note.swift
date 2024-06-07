@@ -125,8 +125,12 @@ extension [Note] {
             self.sorted(by: { $0.timestamp < $1.timestamp })
         case .title:
             self.sorted(by: { $0.title < $1.title })
-        case .category: //category will be optional so this will need guard statements
-            self.sorted(by: { $0.timestamp < $1.timestamp })
+        case .category:
+            self.sorted(by: {
+                guard let itemACategory = $0.tagGiven?.title, let itemBCategory = $1.tagGiven?.title
+                else { return false }
+                return itemACategory < itemBCategory
+            })
         }
     }
 }

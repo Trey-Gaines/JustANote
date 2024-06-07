@@ -239,13 +239,13 @@ struct DetailedNoteView: View {
                     .padding(.all, 1)
                 }
                 Spacer()
-                if isNewNote == true {
-                    if currentNote.title != "" && currentNote.userNote != "leave a new note" {
+                if isNewNote {
+                    if currentNote.title != "" && currentNote.userNote != "" {
                         Button {
                             let myNewNote = Note(timestamp: Date(), title: currentNote.title, userNote: currentNote.userNote, tagGiven: myTag, latitude: myLocation?.coordinate.latitude, longitude: myLocation?.coordinate.longitude, userImages: currentNote.userImages)
-                            
                             modelContext.insert(myNewNote)
                             dismiss()
+                            
                         } label: {
                             Image(systemName: "checkmark.circle.fill")
                                 .font(.system(size: 20))
@@ -295,11 +295,16 @@ struct DetailedNoteView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            if currentNote.tagGiven != nil {
+            if isNewNote {
+                myTag = nil
+                myNewTag = "Select a Tag"
+            }
+            else if currentNote.tagGiven != nil {
                 myNewTag = currentNote.tagGiven!.title
             } else {
-                myNewTag = "Select A Tag"
+                myNewTag = "Select a Tag"
             }
+            
             if isNewNote {
                 currentNote.title = ""
                 currentNote.userNote = ""

@@ -22,13 +22,14 @@ struct ContentView: View {
     let newNote = Note(timestamp: Date(), title: "", userNote: "", latitude: nil, longitude: nil, userImages: nil)
     
     var formattedNotes: [Note] {
-        if searchQuery == "" {
+        if searchQuery.isEmpty {
             let nonFavoriteFormatted = notes.compactMap { note in
                 return note.isFavorite ? nil : note
             }
-            
             return nonFavoriteFormatted.sortByChoice(basedOn: selectedSort)
         }
+        
+        
         let filteredNotes = notes.compactMap { note in
             //Bool for title match
             let titleMatch = note.title.range(of: searchQuery, options: .caseInsensitive) != nil
@@ -42,6 +43,8 @@ struct ContentView: View {
         }
         return filteredNotes.sortByChoice(basedOn: selectedSort)
     }
+    
+    
     
     var favoriteNotes: [Note] {
         let favoriteNotes = notes.compactMap { note in
@@ -99,7 +102,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                } else {
+                } else { //No Notes Content Unavailable View
                     ContentUnavailableView{
                         Label("No notes", systemImage: "list.clipboard.fill")
                     } description: {
@@ -121,8 +124,6 @@ struct ContentView: View {
 //                        })
                     }
                 }
-                
-                
                 HStack{
                     Button {
                         searchingTrash.toggle()
@@ -141,8 +142,11 @@ struct ContentView: View {
                         )
                     }
                     .padding(.all, 1)
-                }
+                } //Search through Trash
             }
+            
+            .searchable(text: $searchQuery, prompt: "Search for a note")
+            
             .sheet(isPresented: $searchingTrash) {
                 TrashView()
                     .presentationDetents([.medium, .large])
@@ -152,6 +156,7 @@ struct ContentView: View {
             .fullScreenCover(isPresented: $tagView) {
                 myTagView()
             }
+            
             .toolbar {
                 //Button to add new note
                 ToolbarItem(placement: .topBarLeading) {
@@ -161,12 +166,13 @@ struct ContentView: View {
                             .fontWeight(.semibold)
                     })
                     .navigationBarHidden(true)
+                    .padding(.bottom, 20)
+                    .padding(.all, 10)
                 }
                 
                 //Title Text View
                 ToolbarItem(placement: .principal) {
                     HStack {
-                        Spacer()
                         Button {
                             tagView = true
                         } label: {
@@ -174,8 +180,9 @@ struct ContentView: View {
                                 .font(.system(size: 25))
                                 .fontWeight(.bold)
                         }
-                        Spacer()
                     }
+                    .padding(.bottom, 20)
+                    .padding(.all, 10)
                 }
                 
                 //Button to change sort order
@@ -192,9 +199,12 @@ struct ContentView: View {
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
                     }
+                    .padding(.bottom, 20)
+                    .padding(.all, 10)
                 }
             }
             
+            .navigationBarTitleDisplayMode(.inline) //Toolbar elements inline
         }
     }
 }
