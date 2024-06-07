@@ -22,12 +22,16 @@ struct TrashView: View {
                         .font(.system(size: 25))
                         .fontWeight(.semibold)
                 }
-                List {
-                    ForEach(notes) { note in
-                        NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
-                            NotePreview(currentNote: note)
+                if notes.count != 0 {
+                    List {
+                        ForEach(notes) { note in
+                            NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
+                                NotePreview(currentNote: note)
+                            }
                         }
                     }
+                } else {
+                    ContentUnavailableView("The trash is empty", systemImage: "xmark.bin.fill")
                 }
             }
         }

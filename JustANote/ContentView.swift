@@ -55,49 +55,74 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    if searchQuery == "" && !favoriteNotes.isEmpty {
-                        Section(header: Text("Favorites")) {
-                            ForEach(favoriteNotes) { note in
+                if notes.count != 0 {
+                    List {
+                        if searchQuery == "" && !favoriteNotes.isEmpty {
+                            Section(header: Text("Favorites")) {
+                                ForEach(favoriteNotes) { note in
+                                    NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
+                                        NotePreview(currentNote: note)
+                                            .padding(.horizontal, 10)
+                                            .padding(.bottom, 2)
+                                            .swipeActions {
+                                                Button(role: .destructive) {
+                                                    note.isFavorite.toggle()
+                                                } label: {
+                                                    Label("Unfavorite", systemImage: "star.fill")
+                                                }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        Section(header: Text("All Notes")) {
+                            ForEach(formattedNotes) { note in
                                 NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
                                     NotePreview(currentNote: note)
                                         .padding(.horizontal, 10)
                                         .padding(.bottom, 2)
                                         .swipeActions {
                                             Button(role: .destructive) {
+                                                note.isInTrash.toggle()
+                                            } label: {
+                                                Label("Trash", systemImage: "trash.fill")
+                                            }
+                                            
+                                            Button(role: .cancel) {
                                                 note.isFavorite.toggle()
                                             } label: {
-                                                Label("Unfavorite", systemImage: "star.fill")
+                                                Label("Favorite", systemImage: "star.fill")
                                             }
                                         }
                                 }
                             }
                         }
                     }
-                    
-                    Section(header: Text("All Notes")) {
-                        ForEach(formattedNotes) { note in
-                            NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
-                                NotePreview(currentNote: note)
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 2)
-                                    .swipeActions {
-                                        Button(role: .destructive) {
-                                            note.isInTrash.toggle()
-                                        } label: {
-                                            Label("Trash", systemImage: "trash.fill")
-                                        }
-                                        
-                                        Button(role: .cancel) {
-                                            note.isFavorite.toggle()
-                                        } label: {
-                                            Label("Favorite", systemImage: "star.fill")
-                                        }
-                                    }
-                            }
-                        }
+                } else {
+                    ContentUnavailableView{
+                        Label("No notes", systemImage: "list.clipboard.fill")
+                    } description: {
+                        Text("Create a new note")
+                    } actions: { //Button to create new note
+//                        NavigationLink(destination: DetailedNoteView(currentNote: newNote, isNewNote: true), label: {
+//                            VStack {
+//                                Image(systemName: "square.and.pencil")
+//                                Text("New Note")
+//                            }
+//                            .font(.subheadline)
+//                            .fontWeight(.semibold)
+//                            .padding()
+//                            .background(
+//                                RoundedRectangle(cornerRadius: 20)
+//                                    .fill(Color.blue.opacity(0.1))
+//                                    .shadow(radius: 5)
+//                            )
+//                        })
                     }
                 }
+                
+                
                 HStack{
                     Button {
                         searchingTrash.toggle()
