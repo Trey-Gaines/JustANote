@@ -102,6 +102,8 @@ struct ContentView: View {
                             }
                         }
                     }
+                    //Whenever Formatted Notes Changes it will trigger animation on the list
+                    .animation(.easeIn, value: formattedNotes)
                 } else { //No Notes Content Unavailable View
                     ContentUnavailableView{
                         Label("No notes", systemImage: "list.clipboard.fill")
