@@ -15,6 +15,7 @@ struct JustANoteApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Note.self,
+            //Tags.self     *Because Note.self has an inverse relationship to Tags, I don't think this is needed...
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

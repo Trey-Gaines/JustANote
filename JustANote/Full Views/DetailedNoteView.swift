@@ -11,7 +11,16 @@ import Foundation
 import MapKit
 
 struct DetailedNoteView: View {
+    //Instead of using Bindable with the SwiftData Object, instead make current note optional, and use the observable object to monitor changes & update
+    //For instance, onAppear if currentNote is nil then use an empty Observable object to record all the user inputs and create a new note object
+    // if currentNote isn't nil, use the other init to create an object with all the values that are bindable, and before dismiss update the note and then deinit
+    
+    
+    
+    
+    
     @Bindable var currentNote: Note
+    @State private var newTitle: String = ""
     var isNewNote: Bool
     @State private var createNewTag: Bool = false
     @Environment(\.modelContext) private var modelContext

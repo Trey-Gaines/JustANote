@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 import _MapKit_SwiftUI
+import Observation
 
 @Model
 final class Note: Identifiable {
@@ -15,11 +16,14 @@ final class Note: Identifiable {
     var timestamp: Date
     var title: String
     var userNote: String
-    var latitude: Double? // Store latitude
-    var longitude: Double? // Store longitude
-    var userImages: [Data]? //Store images the user might add
+    var latitude: Double?
+    var longitude: Double?
+    var userImages: [Data]?
     var isFavorite: Bool
     var isInTrash: Bool
+    var lastModified: Date
+    
+    
     
     
     //When I delete a note, the category won't be deleted with nullify
@@ -79,7 +83,8 @@ final class Note: Identifiable {
     }
     
     //Functions
-    init(timestamp: Date, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false, isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?) {
+    init(timestamp: Date = Date(), title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false,
+         isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?, lastModified: Date = Date()) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
@@ -89,8 +94,8 @@ final class Note: Identifiable {
         self.latitude = latitude
         self.longitude = longitude
         self.userImages = userImages
+        self.lastModified = lastModified
     }
-    
     
     func setLocation(from location: CLLocation) {
         self.latitude = location.coordinate.latitude
@@ -132,5 +137,44 @@ extension [Note] {
                 return itemACategory < itemBCategory
             })
         }
+    }
+}
+
+
+
+
+
+
+@Observable
+final class NoteRecorded {
+    var timestamp: Date
+    var title: String
+    var userNote: String
+    var latitude: Double? // Store latitude
+    var longitude: Double? // Store longitude
+    var userImages: [Data]? //Store images the user might add
+    var isFavorite: Bool
+    var isInTrash: Bool
+    var lastModified: Date
+    
+    init(timestamp: Date, title: String, userNote: String, latitude: Double? = nil, longitude: Double? = nil, userImages: [Data]? = nil, isFavorite: Bool, isInTrash: Bool, lastModified: Date) {
+        self.timestamp = timestamp
+        self.title = title
+        self.userNote = userNote
+        self.latitude = latitude
+        self.longitude = longitude
+        self.userImages = userImages
+        self.isFavorite = isFavorite
+        self.isInTrash = isInTrash
+        self.lastModified = lastModified
+    }
+    
+    convenience init(note: Note) {
+        self.init(timestamp: note.timestamp, title: note.title, userNote: note.userNote, latitude: note.latitude, longitude: note.longitude, userImages: note.userImages, isFavorite: note.isFavorite, isInTrash: note.isInTrash, lastModified: note.lastModified)
+    }
+    
+    
+    deinit {
+        print("Note Recorded has been reset")
     }
 }
