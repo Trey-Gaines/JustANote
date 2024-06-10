@@ -37,6 +37,8 @@
 		2D1FCF182C0E440900D7430E /* AllNotesWithTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNotesWithTagView.swift; sourceTree = "<group>"; };
 		2D1FCF1B2C0E4AD800D7430E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2D1FCF1C2C0E4AE400D7430E /* To-Do.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "To-Do.md"; sourceTree = "<group>"; };
+		2DB8E1A22C16347F00856C01 /* JustANote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JustANote.entitlements; sourceTree = "<group>"; };
+		2DB8E1A32C16350400856C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,8 @@
 		2D0903412C0B425400ADCF4D /* JustANote */ = {
 			isa = PBXGroup;
 			children = (
+				2DB8E1A32C16350400856C01 /* Info.plist */,
+				2DB8E1A22C16347F00856C01 /* JustANote.entitlements */,
 				2D0903422C0B425400ADCF4D /* JustANoteApp.swift */,
 				2D0903442C0B425400ADCF4D /* ContentView.swift */,
 				2D1FCEFE2C0B7BB100D7430E /* Data */,
@@ -337,12 +341,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JustANote/JustANote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"JustANote/Preview Content\"";
 				DEVELOPMENT_TEAM = RTNB77DG84;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JustANote/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Attach user location to note ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -354,7 +360,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = OneByte.JustANote;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onebyte.JustANote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -367,12 +373,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = JustANote/JustANote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"JustANote/Preview Content\"";
 				DEVELOPMENT_TEAM = RTNB77DG84;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JustANote/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Attach user location to note ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -384,7 +392,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = OneByte.JustANote;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onebyte.JustANote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

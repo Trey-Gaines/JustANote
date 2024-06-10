@@ -8,9 +8,9 @@
 import SwiftData
 
 @Model
-final class Tags {
-    @Attribute(.unique)
-    var title: String
+class Tags {
+    //@Attribute(.unique) - Apparently CloudKit doesn't handle unique variables. Not sure
+    var title: String = ""
     var notes: [Note]?
     
     init(title: String) {

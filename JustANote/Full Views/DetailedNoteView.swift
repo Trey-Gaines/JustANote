@@ -16,6 +16,10 @@ struct DetailedNoteView: View {
     // if currentNote isn't nil, use the other init to create an object with all the values that are bindable, and before dismiss update the note and then deinit
     
     
+    //Change the CreateNewTag and DetailedNoteView to use .disabled modifer for input handling instead of if statements (didn't know about it)
+    //AnyView that fits for showing photos. Animated Scrolling HGrid?
+    
+    
     
     
     

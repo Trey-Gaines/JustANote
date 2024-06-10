@@ -11,17 +11,17 @@ import _MapKit_SwiftUI
 import Observation
 
 @Model
-final class Note: Identifiable {
+class Note: Identifiable {
     var id = UUID()
-    var timestamp: Date
-    var title: String
-    var userNote: String
+    var timestamp: Date = Date.now
+    var title: String = ""
+    var userNote: String = ""
     var latitude: Double?
     var longitude: Double?
     var userImages: [Data]?
-    var isFavorite: Bool
-    var isInTrash: Bool
-    var lastModified: Date
+    var isFavorite: Bool = false
+    var isInTrash: Bool = false
+    var lastModified: Date = Date.now
     
     
     
@@ -83,8 +83,8 @@ final class Note: Identifiable {
     }
     
     //Functions
-    init(timestamp: Date = Date(), title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false,
-         isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?, lastModified: Date = Date()) {
+    init(timestamp: Date = Date.now, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false,
+         isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?, lastModified: Date = Date.now) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
@@ -146,7 +146,7 @@ extension [Note] {
 
 
 @Observable
-final class NoteRecorded {
+class NoteRecorded {
     var timestamp: Date
     var title: String
     var userNote: String
