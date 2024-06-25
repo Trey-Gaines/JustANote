@@ -24,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "349AAFD2-CAC8-41C5-839B-95E09C258F7B"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JustANote/ContentView.swift"
@@ -34,22 +34,36 @@
             endingLineNumber = "20"
             landmarkName = "ContentView"
             landmarkType = "14">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "97C9BBCC-E2BD-4F60-895E-B2B5A3A90D70"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JustANote/ContentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "ContentView"
-            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "349AAFD2-CAC8-41C5-839B-95E09C258F7B - 648fb2a7d96e3aca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of JustANote.ContentView.tagView : Swift.Bool"
+                  moduleName = "JustANote"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trey/Code/JustANote/JustANote/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "349AAFD2-CAC8-41C5-839B-95E09C258F7B - 913340b27d9ce0be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "JustANote.ContentView.init(_notes: _SwiftData_SwiftUI.Query&lt;JustANote.Note, Swift.Array&lt;JustANote.Note&gt;&gt;) -&gt; JustANote.ContentView"
+                  moduleName = "JustANote"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trey/Code/JustANote/JustANote/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

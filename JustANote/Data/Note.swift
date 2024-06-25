@@ -18,7 +18,7 @@ class Note: Identifiable {
     var userNote: String = ""
     var latitude: Double?
     var longitude: Double?
-    var userImages: [Data]?
+    //var userImages: [Data]?
     var isFavorite: Bool = false
     var isInTrash: Bool = false
     var lastModified: Date = Date.now
@@ -84,7 +84,7 @@ class Note: Identifiable {
     
     //Functions
     init(timestamp: Date = Date.now, title: String, userNote: String, tagGiven: Tags? = nil, isFavorite: Bool = false,
-         isInTrash: Bool = false, latitude: Double?, longitude: Double?,  userImages: [Data]?, lastModified: Date = Date.now) {
+         isInTrash: Bool = false, latitude: Double?, longitude: Double?, lastModified: Date = Date.now) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
@@ -93,7 +93,6 @@ class Note: Identifiable {
         self.isInTrash = isInTrash
         self.latitude = latitude
         self.longitude = longitude
-        self.userImages = userImages
         self.lastModified = lastModified
     }
     
@@ -152,25 +151,34 @@ class NoteRecorded {
     var userNote: String
     var latitude: Double? // Store latitude
     var longitude: Double? // Store longitude
-    var userImages: [Data]? //Store images the user might add
     var isFavorite: Bool
     var isInTrash: Bool
+    var tagGiven: Tags?
     var lastModified: Date
     
-    init(timestamp: Date, title: String, userNote: String, latitude: Double? = nil, longitude: Double? = nil, userImages: [Data]? = nil, isFavorite: Bool, isInTrash: Bool, lastModified: Date) {
+    init(timestamp: Date, title: String, userNote: String, latitude: Double? = nil, longitude: Double? = nil, isFavorite: Bool, isInTrash: Bool, lastModified: Date) {
         self.timestamp = timestamp
         self.title = title
         self.userNote = userNote
         self.latitude = latitude
         self.longitude = longitude
-        self.userImages = userImages
         self.isFavorite = isFavorite
         self.isInTrash = isInTrash
         self.lastModified = lastModified
     }
     
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter.string(from: timestamp)
+    }
+    
     convenience init(note: Note) {
-        self.init(timestamp: note.timestamp, title: note.title, userNote: note.userNote, latitude: note.latitude, longitude: note.longitude, userImages: note.userImages, isFavorite: note.isFavorite, isInTrash: note.isInTrash, lastModified: note.lastModified)
+        self.init(timestamp: note.timestamp, title: note.title, userNote: note.userNote, latitude: note.latitude, longitude: note.longitude, isFavorite: note.isFavorite, isInTrash: note.isInTrash, lastModified: note.lastModified)
+    }
+    
+    convenience init() {
+        self.init(timestamp: .now, title: "", userNote: "", latitude: nil, longitude: nil, isFavorite: false, isInTrash: false, lastModified: .now)
     }
     
     

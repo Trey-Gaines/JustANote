@@ -41,11 +41,6 @@ struct NotePreview: View {
                             .font(.footnote)
                             .foregroundColor(.blue)
                     }
-                    if currentNote.userImages != nil {
-                        Image(systemName: "photo.artframe.circle")
-                            .font(.footnote)
-                            .foregroundColor(.blue)
-                    }
                     Spacer()
                 }
                 Text(currentNote.timeString)
@@ -61,5 +56,5 @@ struct NotePreview: View {
     NotePreview(currentNote: Note(timestamp: Date.distantPast,
                                   title: "My Favorite Note is this one",
                                   userNote: "My favorite thing to do is win. There are no other pleasantries. I just want to win, that's it for me. I like to",
-                                  tagGiven: nil, latitude: nil, longitude: nil, userImages: nil))
+                                  tagGiven: nil, latitude: nil, longitude: nil))
 }

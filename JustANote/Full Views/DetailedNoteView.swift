@@ -16,14 +16,7 @@ struct DetailedNoteView: View {
     // if currentNote isn't nil, use the other init to create an object with all the values that are bindable, and before dismiss update the note and then deinit
     
     
-    //Change the CreateNewTag and DetailedNoteView to use .disabled modifer for input handling instead of if statements (didn't know about it)
-    //AnyView that fits for showing photos. Animated Scrolling HGrid?
-    
-    
-    
-    
-    
-    @Bindable var currentNote: Note
+    @Bindable var currentNote: NoteRecorded
     @State private var newTitle: String = ""
     var isNewNote: Bool
     @State private var createNewTag: Bool = false
@@ -201,7 +194,7 @@ struct DetailedNoteView: View {
                     Spacer()
                     Button(role: .destructive) {
                         withAnimation {
-                            modelContext.delete(currentNote)
+                            //modelContext.delete(currentNote)
                             dismiss()
                         }
                     } label: {
@@ -253,9 +246,8 @@ struct DetailedNoteView: View {
                 }
                 Spacer()
                 if isNewNote {
-                    if currentNote.title != "" && currentNote.userNote != "" {
                         Button {
-                            let myNewNote = Note(timestamp: Date(), title: currentNote.title, userNote: currentNote.userNote, tagGiven: myTag, latitude: myLocation?.coordinate.latitude, longitude: myLocation?.coordinate.longitude, userImages: currentNote.userImages)
+                            let myNewNote = Note(timestamp: Date(), title: currentNote.title, userNote: currentNote.userNote, tagGiven: myTag, latitude: myLocation?.coordinate.latitude, longitude: myLocation?.coordinate.longitude)
                             modelContext.insert(myNewNote)
                             dismiss()
                             
@@ -264,13 +256,8 @@ struct DetailedNoteView: View {
                                 .font(.system(size: 20))
                                 .fontWeight(.semibold)
                         }
-                    } else {
-                        Button(role: .destructive) {
-                            dismiss()
-                        } label: {
-                            Text("Cancel")
-                        }
-                    }
+                        .disabled(currentNote.title != "" && currentNote.userNote != "")
+                    
                 } else {
                     Button {
                         dismiss()
@@ -319,15 +306,7 @@ struct DetailedNoteView: View {
             }
             
             if isNewNote {
-                currentNote.title = ""
-                currentNote.userNote = ""
-                currentNote.timestamp = Date()
-                currentNote.latitude = nil
-                currentNote.tagGiven = nil
-                currentNote.longitude = nil
-                currentNote.userImages = nil
-                currentNote.isFavorite = false
-                currentNote.isInTrash = false
+                
             }
         }
     }

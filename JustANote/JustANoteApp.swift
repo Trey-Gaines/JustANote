@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct JustANoteApp: App {
-    
+    @State private var myNoteObject = NoteRecorded()
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -31,5 +31,6 @@ struct JustANoteApp: App {
             ContentView()
         }
         .modelContainer(sharedModelContainer)
+        .environment(myNoteObject)
     }
 }

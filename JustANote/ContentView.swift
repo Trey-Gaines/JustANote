@@ -19,8 +19,6 @@ struct ContentView: View {
     @State private var showFavorites: Bool = true
     @State private var tagView: Bool = false
     
-    let newNote = Note(timestamp: Date(), title: "", userNote: "", latitude: nil, longitude: nil, userImages: nil)
-    
     var formattedNotes: [Note] {
         if searchQuery.isEmpty {
             let nonFavoriteFormatted = notes.compactMap { note in
@@ -63,7 +61,10 @@ struct ContentView: View {
                         if searchQuery == "" && !favoriteNotes.isEmpty {
                             Section(header: Text("Favorites")) {
                                 ForEach(favoriteNotes) { note in
-                                    NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
+                                    NavigationLink(
+                                            destination: DetailedNoteView(currentNote: NoteRecorded(note: note), isNewNote: false)
+                                            )
+                                    {
                                         NotePreview(currentNote: note)
                                             .padding(.horizontal, 10)
                                             .padding(.bottom, 2)
@@ -75,13 +76,14 @@ struct ContentView: View {
                                                 }
                                             }
                                     }
+                                    
                                 }
                             }
                         }
                         
                         Section(header: Text("All Notes")) {
                             ForEach(formattedNotes) { note in
-                                NavigationLink(destination: DetailedNoteView(currentNote: note, isNewNote: false)) {
+                                NavigationLink(destination: DetailedNoteView(currentNote: NoteRecorded(note: note), isNewNote: false)) {
                                     NotePreview(currentNote: note)
                                         .padding(.horizontal, 10)
                                         .padding(.bottom, 2)
@@ -162,7 +164,7 @@ struct ContentView: View {
             .toolbar {
                 //Button to add new note
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink(destination: DetailedNoteView(currentNote: newNote, isNewNote: true), label: {
+                    NavigationLink(destination: DetailedNoteView(currentNote: NoteRecorded(), isNewNote: true), label: {
                         Image(systemName: "square.and.pencil")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
@@ -209,9 +211,4 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(.inline) //Toolbar elements inline
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Note.self, inMemory: true)
 }
